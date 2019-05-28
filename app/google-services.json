@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "751348119694",
+    "firebase_url": "https://atm18-a443e.firebaseio.com",
+    "project_id": "atm18-a443e",
+    "storage_bucket": "atm18-a443e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751348119694:android:f85c764928023a46",
+        "android_client_info": {
+          "package_name": "com.tom.atm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751348119694-n117k6rro05n5505jaknqo90tcdfccmq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tom.atm",
+            "certificate_hash": "52ef03be05f064b4b379d4e908e17e5bffc30007"
+          }
+        },
+        {
+          "client_id": "751348119694-39vmtrg1jhalug1fh8ttpe14kok4hga4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2WEskAa6A8MWnUy_ow0HBIR5yThyQ4CI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751348119694-39vmtrg1jhalug1fh8ttpe14kok4hga4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
