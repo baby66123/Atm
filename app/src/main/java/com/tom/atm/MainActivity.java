@@ -2,23 +2,34 @@ package com.tom.atm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_LOGIN = 100;
+    private static final String TAG = MainActivity.class.getSimpleName();
     boolean logon=false;
-    String[] funtions=null;
+    //String[] funtions=null;
     private RecyclerView recyclerView;
+    private List<Funtion> functions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +54,85 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Recycler
+        setupFunctions();
+
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
         //Adapter
-        FuntionAdapter adapter=new FuntionAdapter(this);
+        //FuntionAdapter adapter=new FuntionAdapter(this);
+        IconAdapter adapter=new IconAdapter();
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setupFunctions() {
+        functions = new ArrayList<>();
+        String[] funcs=getResources().getStringArray(R.array.funtions);
+        functions.add(new Funtion(funcs[0],R.drawable.func_transaction));
+        functions.add(new Funtion(funcs[1],R.drawable.func_balance));
+        functions.add(new Funtion(funcs[2],R.drawable.func_finance));
+        functions.add(new Funtion(funcs[3],R.drawable.func_contacts));
+        functions.add(new Funtion(funcs[4],R.drawable.func_exit));
+    }
+
+    public class IconAdapter extends RecyclerView.Adapter<IconAdapter.IconHolder> {
+        @NonNull
+        @Override
+        public IconHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View view=getLayoutInflater().inflate(R.layout.item_icon,viewGroup,false);
+            return new IconHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull IconHolder holder, int position) {
+            final Funtion funtion=functions.get(position);
+            holder.nameText.setText(funtion.getName());
+            holder.iconImage.setImageResource(funtion.getIcon());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClicked(funtion);
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return functions.size();
+        }
+
+        public class IconHolder extends RecyclerView.ViewHolder{
+            ImageView iconImage;
+            TextView nameText;
+            public IconHolder(@NonNull View itemView) {
+                super(itemView);
+                iconImage=itemView.findViewById(R.id.item_icon);
+                nameText=itemView.findViewById(R.id.item_name);
+            }
+        }
+    }
+
+    private void itemClicked(Funtion funtion) {
+        Log.d(TAG, "itemClicked: "+funtion.getName());
+        switch (funtion.getIcon()){
+            case R.drawable.func_transaction:
+                break;
+            case R.drawable.func_balance:
+                break;
+            case R.drawable.func_finance:
+                Intent finance=new Intent(this,FinanceActivity.class);
+                startActivity(finance);
+                break;
+            case R.drawable.func_contacts:
+                Intent contacts=new Intent(this,ContactActivity.class);
+                startActivity(contacts);
+                break;
+            case R.drawable.func_exit:
+                finish();
+                break;
+        }
     }
 
     @Override
